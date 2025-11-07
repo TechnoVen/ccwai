@@ -1,6 +1,5 @@
 node_modules/
 dist/
-out/
-.vscode/
+**/dist/
 .env
 .DS_Store
