@@ -1,0 +1,1 @@
+{"version":3,"file":"engine.d.ts","sourceRoot":"","sources":["engine.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,aAAa,EAAE,MAAM,sBAAsB,CAAC;AAErD,qBAAa,WAAW;IACV,OAAO,CAAC,OAAO;gBAAP,OAAO,gBAAsB;IAE3C,UAAU,CAAC,WAAW,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM,GAAG,OAAO,CAAC,MAAM,CAAC;CAQtE"}

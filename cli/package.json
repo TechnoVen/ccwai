@@ -1,0 +1,17 @@
+{
+  "name": "ccwai-cli",
+  "version": "0.2.0",
+  "description": "CLI tool for Contextual Coding With AI",
+  "type": "module",
+  "bin": {
+    "ccwai": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

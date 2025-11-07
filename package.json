@@ -1,0 +1,19 @@
+{
+  "name": "ccwai",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Contextual Coding With AI — unified dev environment with CLI, core engine, and VS Code extension",
+  "workspaces": [
+    "core",
+    "cli"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "build-all": "npm run build --workspaces",
+    "clean": "rm -rf **/dist",
+    "link-cli": "cd cli && npm link"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
