@@ -1,4 +1,3 @@
-````markdown
 # 🧠 CCWAI — Contextual Coding With AI
 *"Context first. Chaos never."*
 
@@ -37,16 +36,17 @@ If one fails → CCWAI automatically falls back gracefully.
 ### ✅ YAML Front-Matter Commands
 Commands in `/commands/*.md` contain metadata:
 
-```yaml
+yaml
 ---
+```
 name: research_codebase
 agent: codebase-analyzer
 provider: gemini
 model: gemini-1.5-flash
 temperature: 0.2
 stream: true
+```
 ---
-````
 
 ### ✅ Agent Personas
 
@@ -57,9 +57,12 @@ Automatically injected into prompts.
 ### ✅ Thought Storage
 
 Every output is archived into:
+```
 
 `thoughts/shared/...`
 `thoughts/personal/...`
+
+```
 
 Your project becomes self-documenting.
 
@@ -70,11 +73,12 @@ Like Git — CCWAI works anywhere inside the tree.
 ### ✅ Full CLI Tooling
 
 Commands:
-
+```
 `ccwai list`
 `ccwai doctor`
 `ccwai <command> "input"`
 
+```
 -----
 
 # 🧱 Architecture Overview
