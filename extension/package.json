@@ -1,0 +1,114 @@
+{
+  "name": "ccwai-vscode",
+  "displayName": "CCWAI Context Assistant",
+  "description": "Context-first AI workflow assistant that bridges CCWAI commands into VS Code.",
+  "version": "0.4.0",
+  "publisher": "ccwai",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:ccwai.analyzeContext",
+    "onCommand:ccwai.planWithAI",
+    "onCommand:ccwai.runCommand",
+    "onCommand:ccwai.sendContext",
+    "onCommand:ccwai.showThoughts",
+    "workspaceContains:ccwai.config.json"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ccwai.analyzeContext",
+        "title": "CCWAI: Analyze Context",
+        "category": "CCWAI"
+      },
+      {
+        "command": "ccwai.planWithAI",
+        "title": "CCWAI: Plan with AI",
+        "category": "CCWAI"
+      },
+        {
+          "command": "ccwai.runCommand",
+          "title": "CCWAI: Run Command",
+          "category": "CCWAI"
+        },
+        {
+          "command": "ccwai.sendContext",
+          "title": "CCWAI: Send Context to Provider",
+          "category": "CCWAI"
+        },
+      {
+        "command": "ccwai.showThoughts",
+        "title": "CCWAI: Show Thoughts",
+        "category": "CCWAI"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "ccwai.contextView",
+          "name": "CCWAI Context Panel"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CCWAI",
+      "properties": {
+        "ccwai.defaultProvider": {
+          "type": "string",
+          "default": "openai",
+          "enum": [
+            "openai",
+            "gemini",
+            "deepseek"
+          ],
+          "description": "Preferred provider when invoking CCWAI commands from the extension."
+        },
+        "ccwai.autoSaveThoughts": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically store CCWAI extension runs inside thoughts/shared/extension."
+        },
+        "ccwai.contextDepth": {
+          "type": "number",
+          "default": 800,
+          "minimum": 200,
+          "maximum": 4000,
+          "description": "Maximum number of characters from the active editor to include when generating context."
+        },
+        "ccwai.preferredExternalProvider": {
+          "type": "string",
+          "default": "chatgpt",
+          "enum": [
+            "chatgpt",
+            "gemini",
+            "deepseek"
+          ],
+          "description": "Default external provider for the Send Context action."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -w -p .",
+    "lint": "tsc -p . --noEmit",
+    "vscode:prepublish": "npm run build",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.84.0",
+    "rimraf": "^5.0.5",
+    "tslib": "^2.6.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@ccwai/core": "file:../core"
+  }
+}

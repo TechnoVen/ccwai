@@ -7,7 +7,7 @@ import { GeminiAdapter } from "./adapters/gemini.js";
 import { DeepSeekAdapter } from "./adapters/deepseek.js";
 
 export interface CommandMeta {
-  name: string;
+  name?: string;
   agent?: string;
   model?: string;
   provider?: string;

@@ -5,7 +5,8 @@
   "description": "Contextual Coding With AI — unified dev environment with CLI, core engine, and VS Code extension",
   "workspaces": [
     "core",
-    "cli"
+    "cli",
+    "extension"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
