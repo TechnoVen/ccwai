@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { extractContext } from "./contextExtractor";
 import { listThoughts } from "./thoughtsManager";
 import { getDiffSummary } from "./gitSummary";
+import type { ProviderRouteStatus } from "./providerManager";
 
 export type PanelMessage =
   | { type: "analyzeContext" }
@@ -13,6 +14,7 @@ interface PanelData {
   timestamp: string;
   gitSummary: string;
   recentThoughts: string[];
+  providerStatuses: ProviderRouteStatus[];
 }
 
 export class ContextPanelProvider implements vscode.WebviewViewProvider {
@@ -68,9 +70,29 @@ export class ContextPanelProvider implements vscode.WebviewViewProvider {
       timestamp: payload.timestamp,
       gitSummary,
       recentThoughts,
+      providerStatuses: this.cache?.providerStatuses ?? [],
     };
 
     this.view.webview.html = this.render(this.cache);
+  }
+
+  setProviderStatuses(statuses: ProviderRouteStatus[]): void {
+    if (!this.cache) {
+      this.cache = {
+        summary: "",
+        content: "",
+        timestamp: new Date().toISOString(),
+        gitSummary: "",
+        recentThoughts: [],
+        providerStatuses: statuses,
+      };
+    } else {
+      this.cache.providerStatuses = statuses;
+    }
+
+    if (this.view) {
+      this.view.webview.html = this.render(this.cache);
+    }
   }
 
   private render(data: PanelData): string {
@@ -80,6 +102,15 @@ export class ContextPanelProvider implements vscode.WebviewViewProvider {
     const thoughtsMarkup = data.recentThoughts.length
       ? `<ul>${data.recentThoughts.map(label => `<li>${label}</li>`).join("")}</ul>`
       : "<p>No recent thoughts.</p>";
+    const providerMarkup = data.providerStatuses.length
+      ? `<ul>${data.providerStatuses.map(status => {
+        const statusText = status.available
+          ? `Direct command (${status.commandId})`
+          : status.fallbackDescription;
+        const color = status.available ? "var(--vscode-testing-iconPassed)" : "var(--vscode-descriptionForeground)";
+        return `<li><span style="color:${color};">${status.label}</span> — ${statusText}</li>`;
+      }).join("")}</ul>`
+      : "<p>Detecting providers…</p>";
 
     return /* html */ `
       <!DOCTYPE html>
@@ -153,6 +184,8 @@ export class ContextPanelProvider implements vscode.WebviewViewProvider {
           <pre>${escapedGit}</pre>
           <h3>Recent Thoughts</h3>
           ${thoughtsMarkup}
+          <h3>Provider Status</h3>
+          ${providerMarkup}
           <script>
             const vscode = acquireVsCodeApi();
             const analyzeBtn = document.getElementById("analyze");

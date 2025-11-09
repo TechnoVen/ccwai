@@ -3,7 +3,7 @@ import { EngineBridge } from "./engineBridge";
 import { extractContext, formatContextForPrompt } from "./contextExtractor";
 import { ContextPanelProvider, PanelMessage } from "./contextPanel";
 import { saveThought, listThoughts } from "./thoughtsManager";
-import { sendContextToExternalProvider } from "./providerManager";
+import { ProviderManager } from "./providerManager";
 
 const DEFAULT_ANALYZE_COMMAND = "research_codebase_generic";
 const DEFAULT_PLAN_COMMAND = "create_plan_generic";
@@ -11,9 +11,14 @@ const DEFAULT_PLAN_COMMAND = "create_plan_generic";
 export async function activate(context: vscode.ExtensionContext) {
   const output = vscode.window.createOutputChannel("CCWAI");
   const bridge = new EngineBridge(output);
+  const providerManager = new ProviderManager(output);
   const panelProvider = new ContextPanelProvider(context);
 
   context.subscriptions.push(output);
+
+  providerManager.refreshStatuses()
+    .then(statuses => panelProvider.setProviderStatuses(statuses))
+    .catch(err => output.appendLine(`Provider detection failed: ${err?.message ?? err}`));
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       ContextPanelProvider.viewId,
@@ -21,11 +26,13 @@ export async function activate(context: vscode.ExtensionContext) {
     )
   );
 
-  panelProvider.onMessage((message: PanelMessage) => {
+  panelProvider.onMessage(async (message: PanelMessage) => {
     if (message.type === "analyzeContext") {
       handleAnalyzeContext(bridge, panelProvider, output);
     } else if (message.type === "sendContext") {
-      handleSendContext(bridge);
+      const statuses = await providerManager.refreshStatuses();
+      panelProvider.setProviderStatuses(statuses);
+      await handleSendContext(providerManager);
     }
   });
 
@@ -62,9 +69,11 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("ccwai.sendContext", () =>
-      handleSendContext(bridge)
-    )
+    vscode.commands.registerCommand("ccwai.sendContext", async () => {
+      const statuses = await providerManager.refreshStatuses();
+      panelProvider.setProviderStatuses(statuses);
+      await handleSendContext(providerManager);
+    })
   );
 
   context.subscriptions.push(
@@ -217,13 +226,14 @@ async function handleShowThoughts(bridge: EngineBridge) {
   }
 }
 
-async function handleSendContext(bridge: EngineBridge) {
+async function handleSendContext(providerManager: ProviderManager) {
   try {
     const editor = vscode.window.activeTextEditor;
     const maxChars = vscode.workspace.getConfiguration("ccwai").get("contextDepth", 800);
     const payload = extractContext(editor, maxChars);
 
-    await sendContextToExternalProvider(payload);
+    await providerManager.refreshStatuses();
+    await providerManager.sendContextToProvider(payload);
   } catch (error: any) {
     vscode.window.showErrorMessage(error?.message ?? "Failed to send context.");
   }
