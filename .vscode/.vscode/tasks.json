@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run MCP IDE Connector",
+      "type": "shell",
+      "command": "/Users/nadir/.mcp/venv/bin/python",
+      "args": [
+        "/Users/nadir/.mcp/ai_os/ide_connector.py",
+        "--file",
+        "${file}",
+        "--selection",
+        "${selectedText}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    }
+  ]
+}

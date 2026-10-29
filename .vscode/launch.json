@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ccwai: Extension Host",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/ccwai/extension"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/ccwai/extension/dist/**/*.js"
+      ],
+      "preLaunchTask": "npm: watch ccwai-extension"
+    },
+    {
+      "name": "LiD-Flutter: iOS Simulator",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "ios",
+      "cwd": "${workspaceFolder}/LiD-Flutter"
+    },
+    {
+      "name": "LiD-Flutter: Android Emulator",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "android",
+      "cwd": "${workspaceFolder}/LiD-Flutter"
+    },
+    {
+      "name": "LiD-Flutter: Chrome (Web)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "chrome",
+      "cwd": "${workspaceFolder}/LiD-Flutter"
+    }
+  ]
+}

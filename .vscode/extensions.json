@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "dart-code.flutter",
+    "dart-code.dart-code",
+    "fwcd.kotlin",
+    "mathiasfrohlich.kotlin",
+    "vscjava.vscode-java-pack",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bmewburn.vscode-intelephense-client",
+    "ms-vscode.vscode-typescript-next"
+  ]
+}

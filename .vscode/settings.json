@@ -1,0 +1,61 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.tabSize": 2,
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "editor.tabCompletion": "onlySnippets",
+  "editor.wordBasedSuggestions": "off",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "terminal.integrated.fontSize": 14,
+  "explorer.compactFolders": false,
+  "breadcrumbs.enabled": true,
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "security.workspace.trust.enabled": false,
+  "dart.flutterSdkPath": "/Users/nadir/Development/flutter",
+  "dart.previewFlutterUiGuides": true,
+  "dart.previewFlutterUiGuidesCustomTracking": true,
+  "dart.renameFilesWithClasses": "prompt",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "css.validate": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/build": true,
+    "**/.idea": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/.ipynb_checkpoints": true,
+    "**/target": true,
+    "**/.dart_tool": true,
+    "**/.gradle": true,
+    "**/ios/Pods": true
+  },
+  "search.exclude": {
+    "**/build": true,
+    "**/.dart_tool": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/.ipynb_checkpoints": true,
+    "**/target": true,
+    "**/.gradle": true,
+    "**/ios/Pods": true
+  }
+}
